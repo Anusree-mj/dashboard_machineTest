@@ -55,7 +55,7 @@ export default function Header(props: Props) {
             color: 'white', height: '100%', p: 2
         }}>
             <Typography variant="h6" sx={{ fontWeight: 600, mb: 3 }}>
-                ddd
+                Edentu
             </Typography>
             <Divider sx={{ mb: 2, backgroundColor: 'white' }} />
             <List>
@@ -107,7 +107,7 @@ export default function Header(props: Props) {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" noWrap component="div" sx={{ color: 'white', fontWeight: 800 }}>
-                        Edentu
+                        Dashboard
                     </Typography>
                     <div>
                         <IconButton
