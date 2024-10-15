@@ -1,13 +1,9 @@
 import './index.css'
-import Header from './components/header';
-import SideBar from './components/sideBar';
-
-
+import Dashboard from './pages/dashboard';
 function App() {
   return (
     <>
-      <Header />
-      <SideBar />
+      <Dashboard />
     </>
   );
 }
