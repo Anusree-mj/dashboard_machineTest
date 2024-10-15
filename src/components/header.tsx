@@ -61,8 +61,7 @@ export default function Header(props: Props) {
                     <ListItem key={item.id} disablePadding>
                         <ListItemButton
                             onClick={() => {
-                                // Navigate to the selected link
-                                setMobileOpen(false); // Close the drawer when clicked on mobile
+                                setMobileOpen(false); 
                             }}
                             sx={{ width: '100%' }}
                         >

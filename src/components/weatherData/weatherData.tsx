@@ -72,24 +72,21 @@ const WeatherData = () => {
     const handleDownloadPdf = async () => {
         const pdf = new jsPDF();
 
-        // Title
         pdf.setFontSize(16);
         pdf.text("Weather Data Report (London)", 10, 10);
 
-        // Table headers
         const headers = ["Date", "Average Temperature (°C)", "Average Humidity (%)"];
         const data = labels.map((label, index) => [
             label,
-            temperatureData[index]?.toFixed(2), // Format to 2 decimal places
-            humidityData[index]?.toFixed(2) // Format to 2 decimal places
+            temperatureData[index]?.toFixed(2), 
+            humidityData[index]?.toFixed(2) 
         ]);
 
-        // Add the data to the PDF using autoTable
         autoTable(pdf, {
             head: [headers],
             body: data,
             startY: 20,
-            theme: 'grid', // You can customize the theme and other options
+            theme: 'grid', 
             styles: {
                 cellPadding: 5,
                 fontSize: 10,
@@ -97,7 +94,6 @@ const WeatherData = () => {
             },
         });
 
-        // Save the PDF
         pdf.save("weather_data_report.pdf");
     };
 

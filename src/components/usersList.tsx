@@ -80,27 +80,27 @@ const UsersList = () => {
     };
 
     const downloadPdf = async () => {
-        // Capture the table content
-        console.log('function callded')
+        console.log('function called');
         const pdf = new jsPDF();
-        const table = document.getElementById('users-table'); // Assuming your table has this ID
+        const table = document.getElementById('users-table');
 
         if (table) {
             const canvas = await html2canvas(table);
             const imgData = canvas.toDataURL('image/png');
-            const imgWidth = 190; // Image width for PDF
-            const pageHeight = pdf.internal.pageSize.height;
+            const imgWidth = 190;
             const imgHeight = (canvas.height * imgWidth) / canvas.width;
-            const heightLeft = imgHeight;
+            let heightLeft = imgHeight;
+            let position = 20;
+            const marginBottom = 1;
 
-            let position = 10;
-
+            pdf.text("User Details", 10, 10);
+            position += marginBottom;
             pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
-            position += heightLeft;
-
+            position += heightLeft + marginBottom;
             pdf.save('users-list.pdf');
         }
     };
+
 
     return (
         <Box
@@ -108,7 +108,7 @@ const UsersList = () => {
                 padding: 2,
                 boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px',
                 backgroundColor: '#03013559', display: 'flex',
-                flexDirection: 'column', width: {md:'100%',sm:'100%',lg:'40rem'}, maxWidth: '100%',
+                flexDirection: 'column', width: { md: '100%', sm: '100%', lg: '40rem' }, maxWidth: '100%',
             }}>
             <Box sx={{
                 display: 'flex', justifyContent: 'space-between', alignItems: 'center',
