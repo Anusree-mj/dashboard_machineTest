@@ -6,12 +6,14 @@ import WeatherData from '../components/weatherData/weatherData';
 
 const Dashboard = () => {
     return (
-        <Box>
+        <Box sx={{
+            display: 'flex', flexDirection: 'column',
+            alignItems: 'center', justifyContent: 'center'
+        }}>
             <Header />
             <Box sx={{
-                display: 'flex', flexWrap: 'wrap', gap: 2,
-                justifyContent: 'center',
-                ml: { xs: 'none', sm: '15rem' }, mt: 9
+                display: 'flex', flexWrap: 'wrap', gap: 2,mb:2,
+                maxWidth: '95%', ml: { xs: 'none', sm: '15rem' }, mt: 10,
             }}>
                 <UsersList />
                 <WeatherData />

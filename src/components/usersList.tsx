@@ -6,7 +6,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import { Box,Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import axios from 'axios';
 
 interface Column {
@@ -80,17 +80,13 @@ const UsersList = () => {
             sx={{
                 padding: 2,
                 boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px',
-                backgroundColor: '#03013559',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
-                width: '50rem',
-                maxWidth: '100%',
+                backgroundColor: '#03013559', display: 'flex',
+                flexDirection: 'column', width: '40rem', maxWidth: '100%',
             }}
         >
-            <Typography sx={{color:'white',mb:1,
-                fontWeight:800,textAlign:'left',width:'100%',
+            <Typography sx={{
+                color: 'white', mb: 1,
+                fontWeight: 800, textAlign: 'left', width: '100%',
             }}>Users List</Typography>
             <TableContainer sx={{ maxHeight: 440, border: '1px solid white' }}>
                 <Table stickyHeader aria-label="sticky table">
