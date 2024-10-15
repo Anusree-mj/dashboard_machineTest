@@ -8,6 +8,10 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import { Box, Typography } from '@mui/material';
 import axios from 'axios';
+import PictureAsPdfOutlinedIcon from '@mui/icons-material/PictureAsPdfOutlined';
+import Divider from '@mui/material/Divider';
+import { jsPDF } from 'jspdf';
+import html2canvas from 'html2canvas';
 
 interface Column {
     id: 'name' | 'email' | 'website' | 'company';
@@ -75,21 +79,52 @@ const UsersList = () => {
         setPage(0);
     };
 
+    const downloadPdf = async () => {
+        // Capture the table content
+        console.log('function callded')
+        const pdf = new jsPDF();
+        const table = document.getElementById('users-table'); // Assuming your table has this ID
+
+        if (table) {
+            const canvas = await html2canvas(table);
+            const imgData = canvas.toDataURL('image/png');
+            const imgWidth = 190; // Image width for PDF
+            const pageHeight = pdf.internal.pageSize.height;
+            const imgHeight = (canvas.height * imgWidth) / canvas.width;
+            const heightLeft = imgHeight;
+
+            let position = 10;
+
+            pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
+            position += heightLeft;
+
+            pdf.save('users-list.pdf');
+        }
+    };
+
     return (
         <Box
             sx={{
                 padding: 2,
                 boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px',
                 backgroundColor: '#03013559', display: 'flex',
-                flexDirection: 'column', width: '40rem', maxWidth: '100%',
-            }}
-        >
-            <Typography sx={{
-                color: 'white', mb: 1,
-                fontWeight: 800, textAlign: 'left', width: '100%',
-            }}>Users List</Typography>
+                flexDirection: 'column', width: {md:'100%',sm:'100%',lg:'40rem'}, maxWidth: '100%',
+            }}>
+            <Box sx={{
+                display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                maxWidth: '100%', mb: 1
+            }}>
+                <Typography sx={{
+                    color: 'white', fontWeight: 800,
+                }}>Users List</Typography>
+                <PictureAsPdfOutlinedIcon sx={{
+                    color: 'white', fontSize: '2rem',
+                    cursor: 'pointer'
+                }} onClick={downloadPdf} />
+            </Box>
+            <Divider sx={{ mb: 1, backgroundColor: 'white' }} />
             <TableContainer sx={{ maxHeight: 440, border: '1px solid white' }}>
-                <Table stickyHeader aria-label="sticky table">
+                <Table stickyHeader aria-label="sticky table" id="users-table">
                     <TableHead>
                         <TableRow>
                             {columns.map((column) => (
@@ -110,7 +145,7 @@ const UsersList = () => {
                                 return (
                                     <TableRow hover role="checkbox" tabIndex={-1} key={index}
                                         sx={{
-                                            backgroundColor: index % 2 === 0 ? '#1a1a2e' : '#0f3460',
+                                            backgroundColor: index % 2 === 0 ? '#1a1a2e' : '#1a1a2e47',
                                         }}>
                                         {columns.map((column) => {
                                             const value = row[column.id];

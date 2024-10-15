@@ -1,8 +1,12 @@
+import { useEffect, useState } from "react";
+import axios from "axios";
 import { Box, Typography } from "@mui/material";
 import BarGraph from "./barGraph";
-import PieGraph from "./pieGraph"; 
-import React, { useEffect, useState } from "react";
-import axios, { AxiosError } from "axios";
+import PieGraph from "./pieGraph";
+import Divider from '@mui/material/Divider';
+import PictureAsPdfOutlinedIcon from '@mui/icons-material/PictureAsPdfOutlined';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 const WeatherData = () => {
     const [temperatureData, setTemperatureData] = useState<number[]>([]);
@@ -11,13 +15,14 @@ const WeatherData = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState('');
 
-    useEffect(() => {     
+    useEffect(() => {
         fetchWeatherData();
     }, []);
+
     const fetchWeatherData = async () => {
         try {
             const response = await axios.get(
-                `https://api.openweathermap.org/data/2.5/forecast?q=London&appid=eccf36ba90a3bf095cff2a40c10c1e12&units=metric`
+                `https://api.openweathermap.org/data/2.5/forecast?q=London&appid=${process.env.REACT_APP_WEATHER_API_KEY}&units=metric`
             );
 
             const dailyTemp: number[] = [];
@@ -63,11 +68,45 @@ const WeatherData = () => {
             setLoading(false);
         }
     };
+
+    const handleDownloadPdf = async () => {
+        const pdf = new jsPDF();
+
+        // Title
+        pdf.setFontSize(16);
+        pdf.text("Weather Data Report (London)", 10, 10);
+
+        // Table headers
+        const headers = ["Date", "Average Temperature (°C)", "Average Humidity (%)"];
+        const data = labels.map((label, index) => [
+            label,
+            temperatureData[index]?.toFixed(2), // Format to 2 decimal places
+            humidityData[index]?.toFixed(2) // Format to 2 decimal places
+        ]);
+
+        // Add the data to the PDF using autoTable
+        autoTable(pdf, {
+            head: [headers],
+            body: data,
+            startY: 20,
+            theme: 'grid', // You can customize the theme and other options
+            styles: {
+                cellPadding: 5,
+                fontSize: 10,
+                overflow: 'linebreak',
+            },
+        });
+
+        // Save the PDF
+        pdf.save("weather_data_report.pdf");
+    };
+
+
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error: {error}</div>;
 
     const pieData = humidityData.map((value, index) => ({
-        label: labels[index], 
+        label: labels[index],
         value: value,
         color: ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#D10000', '#A700FF',][index % 6],
     }));
@@ -76,17 +115,34 @@ const WeatherData = () => {
         <Box
             sx={{
                 padding: 2, boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px',
-                backgroundColor: '#03013559', display: 'flex', gap: 2,
+                backgroundColor: '#03013559', display: 'flex',
                 flexDirection: 'column', justifyContent: 'center',
-                alignItems: 'center', width: { md: '20rem', xs: '30rem' },
+                alignItems: 'center', width: { sm: '100%', lg: '20rem', },
                 maxWidth: '100%',
             }}>
-            <Typography sx={{
-                color: 'white', mb: 1,
-                fontWeight: 800, textAlign: 'left', width: '100%',
-            }}>Weather Data</Typography>
-            <BarGraph temperatureData={temperatureData} labels={labels} />
-            <PieGraph data={pieData} />
+            <Box sx={{
+                display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                maxWidth: '100%', width: '100%', mb: 1
+            }}>
+                <Typography sx={{
+                    color: 'white', fontWeight: 800,
+                }}>{`Weather Data (London)`}</Typography>
+                <PictureAsPdfOutlinedIcon
+                    onClick={handleDownloadPdf}
+                    sx={{
+                        color: 'white', fontSize: '2rem',
+                        cursor: 'pointer'
+                    }}
+                />
+            </Box>
+            <Divider sx={{ backgroundColor: 'white', width: '100%' }} />
+            <Box sx={{
+                display: 'flex', flexWrap: 'wrap', width: '100%',
+                justifyContent: 'space-around', alignItems: 'center',
+            }}>
+                <BarGraph temperatureData={temperatureData} labels={labels} />
+                <PieGraph data={pieData} />
+            </Box>
         </Box>
     );
 };

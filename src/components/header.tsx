@@ -14,7 +14,6 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import CircleIcon from '@mui/icons-material/Circle';
 import PieChartOutlineOutlinedIcon from '@mui/icons-material/PieChartOutlineOutlined';
 import FilterVintageOutlinedIcon from '@mui/icons-material/FilterVintageOutlined';
 import PushPinOutlinedIcon from '@mui/icons-material/PushPinOutlined';
@@ -32,7 +31,6 @@ interface Props {
 
 export default function Header(props: Props) {
     const [mobileOpen, setMobileOpen] = React.useState(false);
-    const [selectedItem, setSelectedItem] = React.useState('Dashboard');
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
@@ -51,7 +49,7 @@ export default function Header(props: Props) {
 
     const drawer = (
         <Box sx={{
-            background: 'linear-gradient(to right, #d66ddb,#a5339f)',
+             backgroundColor: '#03013559',
             color: 'white', height: '100%', p: 2
         }}>
             <Typography variant="h6" sx={{ fontWeight: 600, mb: 3 }}>
@@ -63,16 +61,11 @@ export default function Header(props: Props) {
                     <ListItem key={item.id} disablePadding>
                         <ListItemButton
                             onClick={() => {
-                                setSelectedItem(item.label);
                                 // Navigate to the selected link
+                                setMobileOpen(false); // Close the drawer when clicked on mobile
                             }}
                             sx={{ width: '100%' }}
                         >
-                            <CircleIcon sx={{
-                                mr: 2, color: 'white',
-                                visibility: selectedItem === item.label ? 'visible' : 'hidden',
-                                width: '0.7rem'
-                            }} />
                             <ListItemIcon sx={{ color: 'white' }}>
                                 {item.icon}
                             </ListItemIcon>
@@ -90,7 +83,7 @@ export default function Header(props: Props) {
         <Box sx={{ display: 'flex' }}>
             <CssBaseline />
             <AppBar position="fixed" sx={{
-                width: { sm: `calc(100% - ${drawerWidth}px)` }, ml: { sm: `${drawerWidth}px` }, background: 'linear-gradient(to right, #3d3f42, #212226)'
+                width: { md: `calc(100% - ${drawerWidth}px)` }, ml: { md: `${drawerWidth}px` }, background: 'linear-gradient(to right, #3d3f42, #212226)'
             }}>
                 <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <IconButton
@@ -100,7 +93,7 @@ export default function Header(props: Props) {
                         onClick={handleDrawerToggle}
                         sx={{
                             mr: 2,
-                            display: { sm: 'none' },
+                            display: { md: 'none' },
                             color: 'white'
                         }}
                     >
@@ -121,7 +114,7 @@ export default function Header(props: Props) {
                     </div>
                 </Toolbar>
             </AppBar>
-            <Box component="nav" sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }} aria-label="mailbox folders">
+            <Box component="nav" sx={{ width: { md: drawerWidth }, flexShrink: { md: 0 } }} aria-label="mailbox folders">
                 <Drawer
                     container={container}
                     variant="temporary"
@@ -129,9 +122,9 @@ export default function Header(props: Props) {
                     onClose={handleDrawerToggle}
                     ModalProps={{ keepMounted: true }}
                     sx={{
-                        display: { xs: 'block', sm: 'none' },
+                        display: { xs: 'block', md: 'none' },
                         '& .MuiDrawer-paper': {
-                            width: drawerWidth, boxSizing: 'border-box', background: 'linear-gradient(to right, #d66ddb,#a5339f)',
+                            width: drawerWidth, boxSizing: 'border-box',  backgroundColor: '#03013559',
                             color: 'white'
                         },
                     }}
@@ -141,9 +134,9 @@ export default function Header(props: Props) {
                 <Drawer
                     variant="permanent"
                     sx={{
-                        display: { xs: 'none', sm: 'block' },
+                        display: { xs: 'none', md: 'block' },
                         '& .MuiDrawer-paper': {
-                            width: drawerWidth, boxSizing: 'border-box', background: 'linear-gradient(to right, #d66ddb,#a5339f)',
+                            width: drawerWidth, boxSizing: 'border-box',  backgroundColor: '#03013559',
                             color: 'white'
                         },
                     }}

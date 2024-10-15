@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { DefaultizedPieValueType } from '@mui/x-charts/models';
 import { PieChart, pieArcLabelClasses } from '@mui/x-charts/PieChart';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
 interface PieData {
   label: string;
@@ -27,7 +27,15 @@ const getArcLabel = (params: DefaultizedPieValueType, data: PieData[]) => {
 };
 
 const PieGraph: React.FC<PieGraphProps> = ({ data }) => {
-  return (   
+  return (
+    <Box sx={{
+      display: 'flex', flexDirection: 'column', width: { lg: '100%', md: '20rem',xs:'20rem' }, maxWidth: '100%',
+      justifyContent: 'center', alignItems: 'center', mt: 1, background: 'white',
+    }}>
+      <Typography sx={{
+        width: '100%', textAlign: 'center', mt: 1,
+        fontSize: '0.9rem', fontWeight: 400
+      }}>Humidity %</Typography>
       <PieChart
         series={[
           {
@@ -37,12 +45,14 @@ const PieGraph: React.FC<PieGraphProps> = ({ data }) => {
           },
         ]}
         sx={{
+          mt: 1, pb: 1,
           [`& .${pieArcLabelClasses.root}`]: {
             fontSize: '0.9rem',
           },
         }}
         {...sizing}
       />
+    </Box>
   );
 };
 
