@@ -12,8 +12,9 @@ const Dashboard = () => {
         }}>
             <Header />
             <Box sx={{
-                display: 'flex', flexWrap: 'wrap', gap: 2,mb:2,
+                display: 'flex', flexWrap: 'wrap', gap: 2, mb: 2,
                 maxWidth: '95%', ml: { xs: 'none', sm: '15rem' }, mt: 10,
+                border: '1px solid yellow'
             }}>
                 <UsersList />
                 <WeatherData />
