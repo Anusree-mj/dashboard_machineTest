@@ -13,7 +13,7 @@ Looking for a quick and simple dashboard to view user listings and weather data?
 
 ## UI Demo
 
-![Screenshot of Dashboard](link_to_your_screenshot_or_gif)
+![Screenshot of Dashboard](/public/ui_demo.png)
 
 ## Features
 
